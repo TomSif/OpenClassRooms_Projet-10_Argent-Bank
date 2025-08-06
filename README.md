@@ -1,204 +1,329 @@
-![ArgentBank](/Front-End/src/assets/img/argentBankLogo.png)
+![ArgentBank](/src/assets/img/argentBankLogo.png)
 
-# ArgentBank $$
+# ArgentBank 💰
 
 ![forthebadge](https://forthebadge.com/images/badges/uses-html.svg)
 ![forthebadge](https://forthebadge.com/images/badges/uses-css.svg)
 ![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)
 [![forthebadge](https://forthebadge.com/images/badges/uses-git.svg)](https://github.com/TomSif)
 [![React](https://img.shields.io/badge/react-20232a?style=for-the-badge&logo=react&logocolor=61dafb)](https://reactjs.org/)
+[![Redux](https://img.shields.io/badge/redux-593d88?style=for-the-badge&logo=redux&logocolor=white)](https://redux.js.org/)
+[![Vite](https://img.shields.io/badge/vite-646cff?style=for-the-badge&logo=vite&logocolor=white)](https://vitejs.dev/)
 
-<a href="#description-fr-">README en Français</a> - <a href="#en-description">English README</a>
+<a href="#description-fr-">🇫🇷 README en Français</a> - <a href="#en-description">🇺🇸 English README</a>
+
+---
 
 ## Description FR :
 
 Ceci est un projet réalisé dans le cadre du programme de formation Développeur Front-end JavaScript React chez [OpenClassrooms](https://openclassrooms.com/fr/paths/900-integrateur-web)
 
-> Écrivez des appels à l'API REST pour connecter le front au back et modélisez une API.
+> **Mission** : Implémenter le front-end d'une application bancaire avec React et Redux
 >
 > #### Compétences évaluées :
 >
-> -   Implémenter un gestionnaire d'état dans une application React 🔄
-> -   Interagir avec une API 🤝
-> -   Modéliser une API 📝
-> -   S'authentifier à une API 🔑
+> - ✅ Implémenter un gestionnaire d'état dans une application React (Redux)
+> - 🤝 Interagir avec une API REST
+> - 📝 Modéliser une API (Phase 2)
+> - 🔑 S'authentifier à une API (JWT)
 
-### Situation (fictive) du projet :
+### 🎯 Contexte du projet :
 
-Développeur Front-end dans une agence spécialisée dans le développement d’applications web.
-L’agence à un nouveau projet avec une nouvelle banque qui a besoin d'aide pour mettre en place son application. Le projet se décompose en deux phases :
+**Argent Bank** est une nouvelle banque en ligne qui souhaite développer son application web pour permettre aux clients de :
+- Se connecter de manière sécurisée
+- Consulter leurs informations de profil  
+- Gérer leurs comptes bancaires
 
--   Phase 1 : Authentification des utilisateurs - Création d'une application web permettant aux clients de se connecter et de gérer leurs comptes et leur profil.
--   Phase 2 : Transactions - Spécifier les endpoints d’API nécessaires pour une deuxième mission.
+### 📱 Fonctionnalités implémentées :
 
-Mon rôle lors de la phase 1 a été de développer l’application web avec authentification des utilisateurs à l’aide de React et Redux. Concernant la phase 2, mon rôle a été de proposer un [modèle pour la conception de l’API des transactions](/A remplacer !!!!!) à ouvrir avec Swagger.
+**Phase 1 - Authentification & Profil :**
+- ✅ Page d'accueil responsive
+- ✅ Système d'authentification (JWT)
+- ✅ Page de connexion avec gestion d'erreurs
+- ✅ Page profil utilisateur sécurisée
+- ✅ Modification du nom d'utilisateur (userName)
+- ✅ Déconnexion sécurisée
+- ✅ Persistance du userName entre sessions
 
-### Phase 1 : Contraintes techniques :
+**Phase 2 - Transactions (Bonus) :**
+- ✅ Page de transactions par compte
+- ✅ Affichage détaillé des opérations
+- ✅ Modification des catégories et notes
+- ✅ Navigation entre les comptes
 
--   Créer l’application web (responsive) avec React.
+### 🛠️ Stack Technique :
 
-    -   Comme point de départ, le HTML statique et le CSS est fourni pour la page d'accueil, la page de connexion et la page de profil.
+**Frontend :**
+- **React 18** avec hooks
+- **Vite** (bundler moderne)
+- **React Router v6** (navigation)
+- **Redux Toolkit** (gestion d'état)
+- **CSS3** responsive
 
--   Utiliser Redux pour gérer le state de l'application, notamment l’application doit avoir :
-    -   Un store pour gérer les données
-    -   Des actions pour l’envoi des informations
-    -   Des reducers pour gérer les changements d'état de l'application
-
-### Phase 1 : Contraintes fonctionnelles :
-
--   L'utilisateur peut visiter la page d'accueil
--   L'utilisateur peut se connecter au système
-    -   Accédez à la page de connexion (/login)
-    -   Remplir le formulaire de connexion avec ses identifiants
-    -   Se connecter à l’application en utilisant des jetons JWT pour l'authentification
-    -   Naviguer avec succès vers la page de profil (/profile)
--   L'utilisateur ne peut voir les informations relatives à son propre profil qu'après s'être connecté avec succès
-    -   Accédez à la page de profil (/profile)
-    -   Voir leur prénom sur la page de profil
-    -   Voir les informations de compte bancaire
--   L'utilisateur peut modifier le profil (nom et prénom) et conserver les données dans la base de données.
--   L'utilisateur peut se déconnecter du système
-    -   Voir le bouton de déconnexion une fois connecté
-    -   Cliquez sur le bouton de déconnexion, déconnecte l’utilisateur et celui-ci revient à la page d'accueil (/)
-
-## Installation :
-
-### Procédure d'installation :
-
-Cloner le repository:
-
--  'https://github.com/TomSif/OpenClassRooms_Projet-10_Argent-Bank'
-
-### Installation et lancement du Back-end :
-
-1. Allez dans le dossier "Back-end" :
-
-2. Installer toutes les dépendances pour le Back-end :
-
--   `npm install` ou `yarn`
-
-3. Lancer le back-end sur le port 3001 (port par défaut) :
-
--   `npm run dev` ou `yarn run dev`
-
-### Installation et lancement du Front-end :
-
-1. Allez dans le dossier "Front-end" :
-
-2. Installer toutes les dépendances pour Front-end :
-
--   `npm install` ou `yarn`
-
-3. Lancer le Front-end sur le port 3000 (port par défaut) :
-
--   `npm start` ou `yarn start`
-
-## Développé avec :
-
--   [Visual Studio Code](https://code.visualstudio.com/) - Éditeur de texte
--   [React 18](https://fr.reactjs.org/) - Bibliothèque JavaScript libre développée par Facebook
--   [Create React App](https://create-react-app.dev/) - Boîte à outils créée par Facebook, qui est la référence pour initier un projet React
--   [React Router V6](https://reactrouter.com/) - Bibliothèque de routage pour React
--   [Redux](https://redux.js.org/) - Bibliothèque JS de gestion d'état pour applications web
--   [GitHub](https://github.com/) - Outil de gestion de versions
-
-## Auteur :
-
-**Thomas Sifferle** : [**GitHub**](https://github.com/TomSif) 
+**Backend fourni :**
+- **Node.js** / **Express**
+- **MongoDB** 
+- **JWT** pour l'authentification
 
 ---
 
-## EN Description:
+## 🚀 Installation
+
+### Prérequis :
+- **Node.js** (v14 ou supérieur)
+- **MongoDB** (pour le backend)
+- **Git**
+
+### 📥 Cloner le projet :
+```bash
+git clone https://github.com/TomSif/OpenClassRooms_Projet-10_Argent-Bank.git
+cd OpenClassRooms_Projet-10_Argent-Bank
+```
+
+### 🔧 Installation Backend :
+1. Naviguez vers le dossier backend :
+```bash
+cd backend
+```
+
+2. Installez les dépendances :
+```bash
+npm install
+```
+
+3. Lancez le serveur de développement :
+```bash
+npm run dev:server
+```
+
+4. Remplissez la base de données :
+```bash
+npm run populate-db
+```
+
+Le backend sera accessible sur `http://localhost:3001`
+
+### ⚛️ Installation Frontend :
+1. Naviguez vers le dossier racine :
+```bash
+cd ../
+```
+
+2. Installez les dépendances :
+```bash
+npm install
+```
+
+3. Lancez l'application :
+```bash
+npm run dev
+```
+
+L'application sera accessible sur `http://localhost:5173`
+
+---
+
+## 👥 Comptes de test
+
+Utilisez ces identifiants pour tester l'application :
+
+| Utilisateur | Email | Mot de passe |
+|-------------|-------|--------------|
+| **Tony Stark** | `tony@stark.com` | `password123` |
+| **Steve Rogers** | `steve@rogers.com` | `password456` |
+
+---
+
+## 📱 Utilisation
+
+1. **Accueil** : Visitez la page d'accueil
+2. **Connexion** : Cliquez sur "Sign In" et utilisez un compte de test
+3. **Profil** : Consultez vos informations et modifiez votre userName
+4. **Transactions** : Cliquez sur "View transactions" sur n'importe quel compte
+5. **Édition** : Modifiez les catégories et notes des transactions
+6. **Déconnexion** : Cliquez sur "Sign Out" pour vous déconnecter
+
+---
+
+## 🏗️ Architecture
+
+```
+src/
+├── app/                    # Configuration Redux
+│   └── store.js
+├── features/               # Slices Redux
+│   └── auth/
+│       └── authSlice.js
+├── components/             # Composants réutilisables
+│   ├── Header.jsx
+│   ├── Login.jsx
+│   └── UserProfile.jsx
+├── pages/                  # Pages principales
+│   ├── HomePage.jsx
+│   ├── SignInPage.jsx
+│   ├── User.jsx
+│   └── Transactions.jsx
+└── assets/                 # Images et styles
+    ├── img/
+    └── css/
+```
+
+---
+
+## 🧪 API Documentation
+
+Une fois le backend lancé, consultez la documentation Swagger :
+`http://localhost:3001/api-docs`
+
+**Endpoints principaux :**
+- `POST /api/v1/user/login` - Connexion
+- `POST /api/v1/user/profile` - Récupération profil
+- `PUT /api/v1/user/profile` - Modification profil
+
+---
+
+## 📋 Spécifications Phase 2
+
+J'ai également conçu une spécification d'API pour la gestion des transactions (Phase 2 du projet). Consultez le fichier `swagger_phase_2.yaml` pour les détails techniques.
+
+---
+
+## 🔧 Développé avec :
+
+- [React 18](https://reactjs.org/) - Bibliothèque JavaScript
+- [Vite](https://vitejs.dev/) - Build tool moderne
+- [Redux Toolkit](https://redux-toolkit.js.org/) - Gestion d'état
+- [React Router](https://reactrouter.com/) - Navigation
+- [Visual Studio Code](https://code.visualstudio.com/) - IDE
+
+---
+
+## 👨‍💻 Auteur :
+
+**Thomas Sifferle** : [GitHub](https://github.com/TomSif)
+
+---
+
+## EN Description
 
 This is a project carried out as part of the Front-End JavaScript React Developer training program at [OpenClassrooms](https://openclassrooms.com/fr/paths/900-integrateur-web).
 
-> Write REST API calls to connect the front-end to the back-end and model an API.
+> **Mission**: Implement the front-end of a banking application with React and Redux
 >
 > #### Skills evaluated:
 >
-> -   Implement a state manager in a React application 🔄
-> -   Interact with an API 🤝
-> -   Model an API 📝
-> -   Authenticate with an API 🔑
+> - ✅ Implement a state manager in a React application (Redux)
+> - 🤝 Interact with a REST API  
+> - 📝 Model an API (Phase 2)
+> - 🔑 Authenticate with an API (JWT)
 
-### Project (fictional) situation:
+### 🎯 Project Context:
 
-I am a Front-end Developer in an agency specialized in web application development.
-The agency has a new project with a new bank that needs help setting up its application. The project is divided into two phases:
+**Argent Bank** is a new online bank that wants to develop its web application to allow customers to:
+- Log in securely
+- View their profile information
+- Manage their bank accounts
 
--   Phase 1: User Authentication - Creating a web application that allows clients to log in and manage their accounts and profile.
--   Phase 2: Transactions - Specifying the necessary API endpoints for a second mission.
+### 📱 Implemented Features:
 
-My role during phase 1 was to develop the web application with user authentication using React and Redux. Regarding phase 2, my role was to propose a [model for designing the transaction API](/Front-end/swagger_phase_2.yaml) to be opened with Swagger.
+**Phase 1 - Authentication & Profile:**
+- ✅ Responsive homepage
+- ✅ Authentication system (JWT)
+- ✅ Login page with error handling
+- ✅ Secure user profile page
+- ✅ Username modification (userName)
+- ✅ Secure logout
+- ✅ userName persistence between sessions
 
-### Phase 1: Technical Constraints:
+**Phase 2 - Transactions (Bonus):**
+- ✅ Transaction page per account
+- ✅ Detailed display of operations
+- ✅ Category and note modification
+- ✅ Navigation between accounts
 
--   Create the web application (responsive) with React.
+### 🛠️ Tech Stack:
 
-    -   As a starting point, static HTML and CSS is provided for the homepage, login page, and profile page.
+**Frontend:**
+- **React 18** with hooks
+- **Vite** (modern bundler)
+- **React Router v6** (navigation)
+- **Redux Toolkit** (state management)
+- **CSS3** responsive
 
--   Use Redux to manage the application state, including the application must have:
-    -   A store to manage data
-    -   Actions to send information
-    -   Reducers to manage changes in the application state
+**Backend provided:**
+- **Node.js** / **Express**
+- **MongoDB**
+- **JWT** for authentication
 
-### Phase 1: Functional Constraints:
+---
 
--   The user can visit the homepage.
--   The user can log in to the system.
-    -   Access the login page (/login)
-    -   Fill in the login form with their credentials
-    -   Log in to the application using JWT tokens for authentication
-    -   Successfully navigate to the profile page (/profile)
--   The user can only see information related to their own profile after successfully logging in.
-    -   Access the profile page (/profile)
-    -   See their first name on the profile page
-    -   See banking account information
--   The user can edit the profile (first and last name) and retain the data in the database.
--   The user can log out of the system.
-    -   See the logout button once logged in
-    -   Clicking the logout button logs the user out and returns them to the homepage (/)
+## 🚀 Installation
 
-### Installation process:
+### Prerequisites:
+- **Node.js** (v14 or higher)
+- **MongoDB** (for backend)
+- **Git**
 
-Clone the repository :
+### 📥 Clone the project:
+```bash
+git clone https://github.com/TomSif/OpenClassRooms_Projet-10_Argent-Bank.git
+cd OpenClassRooms_Projet-10_Argent-Bank
+```
 
--   'https://github.com/TomSif/OpenClassRooms_Projet-10_Argent-Bank'
+### 🔧 Backend Setup:
+1. Navigate to backend folder:
+```bash
+cd backend
+```
 
+2. Install dependencies:
+```bash
+npm install
+```
 
-### Installing and launching Back-end:
+3. Start development server:
+```bash
+npm run dev:server
+```
 
-1. Go in "Back-end" folder :
+4. Populate database:
+```bash
+npm run populate-db
+```
 
-2. Install all dependencies for Back-end:
+Backend will be accessible at `http://localhost:3001`
 
--   `npm install` or `yarn`
+### ⚛️ Frontend Setup:
+1. Navigate to root folder:
+```bash
+cd ../
+```
 
-3. Launch back-end on port 3001 (default port):
+2. Install dependencies:
+```bash
+npm install
+```
 
--   `npm run dev` or `yarn run dev`
+3. Start application:
+```bash
+npm run dev
+```
 
-### Installing and launching Front-end:
+Application will be accessible at `http://localhost:5173`
 
-1. Go in "Front-end" folder :
+---
 
-2. Install all dependencies for Front-end:
+## 👥 Test Accounts
 
--   `npm install` or `yarn`
+Use these credentials to test the application:
 
-3. Launch front-end on port 3000 (default port):
+| User | Email | Password |
+|------|-------|----------|
+| **Tony Stark** | `tony@stark.com` | `password123` |
+| **Steve Rogers** | `steve@rogers.com` | `password456` |
 
--   `npm start` or `yarn start`
+---
 
-## Built With:
+## 👨‍💻 Author:
 
--   [Visual Studio Code](https://code.visualstudio.com/) - Text editor
--   [React 18](https://reactjs.org/) - Free and open-source JavaScript library developed by Facebook
--   [Create React App](https://create-react-app.dev/) - Toolkit created by Facebook, which is the reference for initiating a React project
--   [React Router V6](https://reactrouter.com/) - Routing library for React
--   [Redux](https://redux.js.org/) - JS library for state management in web applications
--   [GitHub](https://github.com/) - Version control tool
-
-## Author:
-
-**Thomas Sifferle**: [**GitHub**](https://github.com/TomSif) 
+**Thomas Sifferle**: [GitHub](https://github.com/TomSif)
