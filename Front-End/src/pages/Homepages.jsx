@@ -1,4 +1,6 @@
 import Header from '../components/Header'
+import Footer from '../components/Footer';
+import FeatureItem from '../components/FeatureItem';
 import iconChat from '../assets/img/icon-chat.png'
 import iconMoney from '../assets/img/icon-money.png'
 import iconSecurity from '../assets/img/icon-security.png'
@@ -9,7 +11,7 @@ function HomePage() {
     <>
       <Header />
       
-      <main>
+      <main className='main'>
         <div className="hero">
           <section className="hero-content">
             <h2 className="sr-only">Promoted Content</h2>
@@ -22,35 +24,25 @@ function HomePage() {
         
         <section className="features">
           <h2 className="sr-only">Features</h2>
-          <div className="feature-item">
-            <img src={iconChat} alt="Chat Icon" className="feature-icon" />
-            <h3 className="feature-item-title">You are our #1 priority</h3>
-            <p>
-              Need to talk to a representative? You can get in touch through our
-              24/7 chat or through a phone call in less than 5 minutes.
-            </p>
-          </div>
-          <div className="feature-item">
-            <img src={iconMoney} alt="Money Icon" className="feature-icon" />
-            <h3 className="feature-item-title">More savings means higher rates</h3>
-            <p>
-              The more you save with us, the higher your interest rate will be!
-            </p>
-          </div>
-          <div className="feature-item">
-            <img src={iconSecurity} alt="Security Icon" className="feature-icon" />
-            <h3 className="feature-item-title">Security you can trust</h3>
-            <p>
-              We use top of the line encryption to make sure your data and money
-              is always safe.
-            </p>
-          </div>
+          <FeatureItem
+            iconSrc={iconChat}
+            title="You are our #1 priority"
+            text="Need to talk to a representative? You can get in touch through our 24/7 chat or through a phone call in less than 5 minutes."
+          />
+          <FeatureItem
+            iconSrc={iconMoney}
+            title="More savings means higher rates"
+            text="The more you save with us, the higher your interest rate will be!"
+          />
+          <FeatureItem
+            iconSrc={iconSecurity}
+            title="Security you can trust"
+            text="We use top of the line encryption to make sure your data and money is always safe."
+          />
         </section>
       </main>
       
-      <footer className="footer">
-        <p className="footer-text">Copyright 2020 Argent Bank</p>
-      </footer>
+      <Footer />
     </>
   )
 }

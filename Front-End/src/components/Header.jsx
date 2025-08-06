@@ -3,6 +3,32 @@ import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../features/auth/authSlice'
 import argentBankLogo from '../assets/img/argentBankLogo.png'
 
+// Composant pour la navigation authentifiée
+const AuthenticatedNav = ({ displayName, onLogout }) => (
+  <>
+    <Link className="main-nav-item" to="/user">
+      <i className="fa fa-user-circle"></i>
+      {displayName}
+    </Link>
+    <button 
+      className="main-nav-item" 
+      onClick={onLogout}
+      style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+    >
+      <i className="fa fa-sign-out"></i>
+      Sign Out
+    </button>
+  </>
+)
+
+// Composant pour la navigation non authentifiée
+const UnauthenticatedNav = () => (
+  <Link className="main-nav-item" to="/sign-in">
+    <i className="fa fa-user-circle"></i>
+    Sign In
+  </Link>
+)
+
 const Header = () => {
   const dispatch = useDispatch()
   const { isAuthenticated, user, userName } = useSelector((state) => state.auth)
@@ -27,25 +53,12 @@ const Header = () => {
       
       <div>
         {isAuthenticated ? (
-          <>
-            <Link className="main-nav-item" to="/user">
-              <i className="fa fa-user-circle"></i>
-              {displayName}
-            </Link>
-            <button 
-              className="main-nav-item" 
-              onClick={handleLogout}
-              style={{ background: 'none', border: 'none', cursor: 'pointer' }}
-            >
-              <i className="fa fa-sign-out"></i>
-              Sign Out
-            </button>
-          </>
+          <AuthenticatedNav 
+            displayName={displayName} 
+            onLogout={handleLogout} 
+          />
         ) : (
-          <Link className="main-nav-item" to="/sign-in">
-            <i className="fa fa-user-circle"></i>
-            Sign In
-          </Link>
+          <UnauthenticatedNav />
         )}
       </div>
     </nav>

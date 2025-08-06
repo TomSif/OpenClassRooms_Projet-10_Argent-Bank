@@ -2,6 +2,78 @@ import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchUserProfile, updateUserName } from '../features/auth/authSlice'
 
+// Composant séparé pour le formulaire d'édition
+const EditForm = ({ user, newUserName, setNewUserName, onSave, onCancel, isLoading }) => (
+  <div>
+    <h1>Edit user info</h1>
+    <form onSubmit={onSave}>
+      <div className="input-wrapper">
+        <label htmlFor="userName">User name:</label>
+        <input
+          type="text"
+          id="userName"
+          value={newUserName}
+          onChange={(e) => setNewUserName(e.target.value)}
+          required
+        />
+      </div>
+      
+      <div className="input-wrapper">
+        <label htmlFor="firstName">First name:</label>
+        <input
+          type="text"
+          id="firstName"
+          value={user?.firstName || ''}
+          disabled
+          style={{ backgroundColor: '#f0f0f0' }}
+        />
+      </div>
+      
+      <div className="input-wrapper">
+        <label htmlFor="lastName">Last name:</label>
+        <input
+          type="text"
+          id="lastName"
+          value={user?.lastName || ''}
+          disabled
+          style={{ backgroundColor: '#f0f0f0' }}
+        />
+      </div>
+      
+      <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+        <button 
+          type="submit" 
+          className="edit-button"
+          disabled={isLoading}
+        >
+          {isLoading ? 'Saving...' : 'Save'}
+        </button>
+        <button 
+          type="button" 
+          className="edit-button"
+          onClick={onCancel}
+          style={{ backgroundColor: '#6c757d' }}
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+)
+
+// Composant séparé pour l'affichage du profil
+const ProfileDisplay = ({ user, onEditClick }) => (
+  <div>
+    <h1>
+      Welcome back<br />
+      {user?.firstName} {user?.lastName || user?.userName}!
+    </h1>
+    <button className="edit-button" onClick={onEditClick}>
+      Edit Name
+    </button>
+  </div>
+)
+
 const UserProfile = () => {
   const dispatch = useDispatch()
   const { user, isLoading, error } = useSelector((state) => state.auth)
@@ -41,7 +113,7 @@ const UserProfile = () => {
     setIsEditing(false)
   }
 
-  if (isLoading) {
+  if (isLoading && !user) {
     return (
       <div className="header">
         <h1>Loading...</h1>
@@ -60,68 +132,19 @@ const UserProfile = () => {
   return (
     <div className="header">
       {isEditing ? (
-        <div>
-          <h1>Edit user info</h1>
-          <form onSubmit={handleSave}>
-            <div className="input-wrapper">
-              <label htmlFor="userName">User name:</label>
-              <input
-                type="text"
-                id="userName"
-                value={newUserName}
-                onChange={(e) => setNewUserName(e.target.value)}
-                required
-              />
-            </div>
-            <div className="input-wrapper">
-              <label htmlFor="firstName">First name:</label>
-              <input
-                type="text"
-                id="firstName"
-                value={user?.firstName || ''}
-                disabled
-                style={{ backgroundColor: '#f0f0f0' }}
-              />
-            </div>
-            <div className="input-wrapper">
-              <label htmlFor="lastName">Last name:</label>
-              <input
-                type="text"
-                id="lastName"
-                value={user?.lastName || ''}
-                disabled
-                style={{ backgroundColor: '#f0f0f0' }}
-              />
-            </div>
-            <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-              <button 
-                type="submit" 
-                className="edit-button"
-                disabled={isLoading}
-              >
-                {isLoading ? 'Saving...' : 'Save'}
-              </button>
-              <button 
-                type="button" 
-                className="edit-button"
-                onClick={handleCancel}
-                style={{ backgroundColor: '#6c757d' }}
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </div>
+        <EditForm 
+          user={user}
+          newUserName={newUserName}
+          setNewUserName={setNewUserName}
+          onSave={handleSave}
+          onCancel={handleCancel}
+          isLoading={isLoading}
+        />
       ) : (
-        <div>
-          <h1>
-            Welcome back<br />
-            {user?.firstName} {user?.lastName || user?.userName}!
-          </h1>
-          <button className="edit-button" onClick={handleEditClick}>
-            Edit Name
-          </button>
-        </div>
+        <ProfileDisplay 
+          user={user}
+          onEditClick={handleEditClick}
+        />
       )}
     </div>
   )

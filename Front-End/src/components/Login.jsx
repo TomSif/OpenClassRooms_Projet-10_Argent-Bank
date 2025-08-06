@@ -5,8 +5,10 @@ import { useNavigate } from 'react-router-dom'
 import { loginUser, clearError } from '../features/auth/authSlice'
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  })
   
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -27,14 +29,22 @@ const Login = () => {
     }
   }, [dispatch])
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     
-    if (!email || !password) {
+    if (!formData.email || !formData.password) {
       return
     }
     
-    dispatch(loginUser({ email, password }))
+    dispatch(loginUser(formData))
   }
 
   return (
@@ -48,8 +58,9 @@ const Login = () => {
           <input
             type="email"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
             required
           />
         </div>
@@ -59,8 +70,9 @@ const Login = () => {
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
             required
           />
         </div>
