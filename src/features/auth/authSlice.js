@@ -101,14 +101,11 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout: (state) => {
-      state.token = null
-      state.user = null
-      state.userName = null
-      state.isAuthenticated = false
-      state.error = null
+    logout: () => {
+      // Reset complet - pas besoin du paramètre state
       localStorage.removeItem('token')
       localStorage.removeItem('userName')
+      return initialState
     },
     clearError: (state) => {
       state.error = null
