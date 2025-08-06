@@ -5,11 +5,14 @@ import argentBankLogo from '../assets/img/argentBankLogo.png'
 
 const Header = () => {
   const dispatch = useDispatch()
-  const { isAuthenticated, user } = useSelector((state) => state.auth)
+  const { isAuthenticated, user, userName } = useSelector((state) => state.auth)
 
   const handleLogout = () => {
     dispatch(logout())
   }
+
+  // Affichage du nom : userName en priorité, sinon firstName
+  const displayName = userName || user?.firstName || 'User'
 
   return (
     <nav className="main-nav">
@@ -27,7 +30,7 @@ const Header = () => {
           <>
             <Link className="main-nav-item" to="/user">
               <i className="fa fa-user-circle"></i>
-              {user?.firstName || 'User'}
+              {displayName}
             </Link>
             <button 
               className="main-nav-item" 

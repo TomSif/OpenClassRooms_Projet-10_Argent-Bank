@@ -63,34 +63,23 @@ export const fetchUserProfile = createAsyncThunk(
   }
 )
 
-// Thunk pour modifier le userName
+// Thunk pour modifier le userName (stockage côté client uniquement)
 export const updateUserName = createAsyncThunk(
   'auth/updateUserName',
   async (userName, { getState, rejectWithValue }) => {
     try {
+      // Pas d'appel API car le backend ne supporte pas userName
+      // On stocke juste côté client
       const { auth } = getState()
-      const token = auth.token
-
-      if (!token) {
-        return rejectWithValue('No token available')
+      
+      if (!auth.user) {
+        return rejectWithValue('No user data available')
       }
 
-      const response = await fetch(`${API_BASE_URL}/user/profile`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({ userName }),
-      })
+      // Simulation d'un délai réseau pour l'UX
+      await new Promise(resolve => setTimeout(resolve, 500))
 
-      const data = await response.json()
-
-      if (!response.ok) {
-        return rejectWithValue(data.message || 'Failed to update username')
-      }
-
-      return data.body
+      return { userName }
     } catch (error) {
       return rejectWithValue(error.message || 'Network error')
     }
@@ -101,6 +90,7 @@ export const updateUserName = createAsyncThunk(
 const initialState = {
   token: localStorage.getItem('token') || null,
   user: null,
+  userName: localStorage.getItem('userName') || null, // Ajout du userName côté client
   isLoading: false,
   error: null,
   isAuthenticated: !!localStorage.getItem('token'),
@@ -114,12 +104,18 @@ const authSlice = createSlice({
     logout: (state) => {
       state.token = null
       state.user = null
+      state.userName = null
       state.isAuthenticated = false
       state.error = null
       localStorage.removeItem('token')
+      localStorage.removeItem('userName')
     },
     clearError: (state) => {
       state.error = null
+    },
+    setUserName: (state, action) => {
+      state.userName = action.payload
+      localStorage.setItem('userName', action.payload)
     },
   },
   extraReducers: (builder) => {
@@ -157,14 +153,16 @@ const authSlice = createSlice({
         state.error = action.payload
       })
       
-      // Update username cases
+      // Update username cases (stockage côté client uniquement)
       .addCase(updateUserName.pending, (state) => {
         state.isLoading = true
         state.error = null
       })
       .addCase(updateUserName.fulfilled, (state, action) => {
         state.isLoading = false
-        state.user = { ...state.user, ...action.payload }
+        // Stockage du userName côté client
+        state.userName = action.payload.userName
+        localStorage.setItem('userName', action.payload.userName)
         state.error = null
       })
       .addCase(updateUserName.rejected, (state, action) => {
@@ -174,5 +172,5 @@ const authSlice = createSlice({
   },
 })
 
-export const { logout, clearError } = authSlice.actions
+export const { logout, clearError, setUserName } = authSlice.actions
 export default authSlice.reducer
