@@ -102,10 +102,19 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: () => {
-      // Reset complet - pas besoin du paramètre state
+      // SÉCURITÉ : Supprimer uniquement les données sensibles
       localStorage.removeItem('token')
-      localStorage.removeItem('userName')
-      return initialState
+      // userName reste dans localStorage pour la prochaine session
+      
+      // State nettoyé mais userName préservé
+      return {
+        token: null,
+        user: null, // Données sensibles supprimées
+        userName: localStorage.getItem('userName'), // userName préservé
+        isLoading: false,
+        error: null,
+        isAuthenticated: false,
+      }
     },
     clearError: (state) => {
       state.error = null
