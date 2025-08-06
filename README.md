@@ -1,4 +1,4 @@
-![ArgentBank](/Front-end/src/assets/argentBankLogo.png)
+![ArgentBank](/Front-End/src/assets/img/argentBankLogo.png)
 
 # ArgentBank 🏦💵
 
@@ -12,7 +12,7 @@
 
 ## Description FR :
 
-Ceci est un projet réalisé dans le cadre du programme de formation Développeur Front-end JavaScript React chez [OpenClassrooms](https://openclassrooms.com/fr/paths/516-developpeur-dapplication-javascript-react)
+Ceci est un projet réalisé dans le cadre du programme de formation Développeur Front-end JavaScript React chez [OpenClassrooms](https://openclassrooms.com/fr/paths/900-integrateur-web)
 
 > Écrivez des appels à l'API REST pour connecter le front au back et modélisez une API.
 >
@@ -31,7 +31,7 @@ L’agence à un nouveau projet avec une nouvelle banque qui a besoin d'aide pou
 -   Phase 1 : Authentification des utilisateurs - Création d'une application web permettant aux clients de se connecter et de gérer leurs comptes et leur profil.
 -   Phase 2 : Transactions - Spécifier les endpoints d’API nécessaires pour une deuxième mission.
 
-Mon rôle lors de la phase 1 a été de développer l’application web avec authentification des utilisateurs à l’aide de React et Redux. Concernant la phase 2, mon rôle a été de proposer un [modèle pour la conception de l’API des transactions](/Front-end/swagger_phase_2.yaml) à ouvrir avec Swagger.
+Mon rôle lors de la phase 1 a été de développer l’application web avec authentification des utilisateurs à l’aide de React et Redux. Concernant la phase 2, mon rôle a été de proposer un [modèle pour la conception de l’API des transactions](/A remplacer !!!!!) à ouvrir avec Swagger.
 
 ### Phase 1 : Contraintes techniques :
 
@@ -110,7 +110,7 @@ Cloner le repository:
 
 ## EN Description:
 
-This is a project carried out as part of the Front-End JavaScript React Developer training program at [OpenClassrooms](https://openclassrooms.com/en/paths/517-javascript-react-developer).
+This is a project carried out as part of the Front-End JavaScript React Developer training program at [OpenClassrooms](https://openclassrooms.com/fr/paths/900-integrateur-web).
 
 > Write REST API calls to connect the front-end to the back-end and model an API.
 >
@@ -193,13 +193,10 @@ Clone the repository :
 ## Built With:
 
 -   [Visual Studio Code](https://code.visualstudio.com/) - Text editor
--   [Sass](https://sass-lang.com/) - CSS preprocessor
 -   [React 18](https://reactjs.org/) - Free and open-source JavaScript library developed by Facebook
 -   [Create React App](https://create-react-app.dev/) - Toolkit created by Facebook, which is the reference for initiating a React project
 -   [React Router V6](https://reactrouter.com/) - Routing library for React
--   [Prop-types](https://www.npmjs.com/package/prop-types) - A package used to document the intended types of properties passed to React components
 -   [Redux](https://redux.js.org/) - JS library for state management in web applications
--   [JSDoc](https://jsdoc.app/) - Documentation generator for JavaScript
 -   [GitHub](https://github.com/) - Version control tool
 
 ## Author:
