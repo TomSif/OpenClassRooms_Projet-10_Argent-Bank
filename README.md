@@ -1,11 +1,11 @@
 ![ArgentBank](/Front-End/src/assets/img/argentBankLogo.png)
 
-# ArgentBank 🏦💵
+# ArgentBank $$
 
 ![forthebadge](https://forthebadge.com/images/badges/uses-html.svg)
 ![forthebadge](https://forthebadge.com/images/badges/uses-css.svg)
 ![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)
-[![forthebadge](https://forthebadge.com/images/badges/uses-git.svg)](https://github.com/ArthurBlanc)
+[![forthebadge](https://forthebadge.com/images/badges/uses-git.svg)](https://github.com/TomSif)
 [![React](https://img.shields.io/badge/react-20232a?style=for-the-badge&logo=react&logocolor=61dafb)](https://reactjs.org/)
 
 <a href="#description-fr-">README en Français</a> - <a href="#en-description">English README</a>
