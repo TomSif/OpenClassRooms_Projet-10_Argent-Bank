@@ -1,34 +1,33 @@
-import argentBankLogo from '../assets/img/argentBankLogo.png'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import Header from '../components/Header'
+import UserProfile from '../components/UserProfile'
 import '../css/main.css'
 
 function User() {
+  const navigate = useNavigate()
+  const { isAuthenticated } = useSelector((state) => state.auth)
+
+  // Rediriger vers la page de connexion si pas authentifié
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/sign-in')
+    }
+  }, [isAuthenticated, navigate])
+
+  // Si pas authentifié, ne rien afficher (redirection en cours)
+  if (!isAuthenticated) {
+    return null
+  }
+
   return (
     <>
-      <nav className="main-nav">
-        <a className="main-nav-logo" href="/">
-          <img
-            className="main-nav-logo-image"
-            src={argentBankLogo}
-            alt="Argent Bank Logo"
-          />
-          <h1 className="sr-only">Argent Bank</h1>
-        </a>
-        <div>
-          <a className="main-nav-item" href="/user">
-            <i className="fa fa-user-circle"></i>
-            Tony
-          </a>
-          <a className="main-nav-item" href="/">
-            <i className="fa fa-sign-out"></i>
-            Sign Out
-          </a>
-        </div>
-      </nav>
+      <Header />
+      
       <main className="main bg-dark">
-        <div className="header">
-          <h1>Welcome back<br />Tony Jarvis!</h1>
-          <button className="edit-button">Edit Name</button>
-        </div>
+        <UserProfile />
+        
         <h2 className="sr-only">Accounts</h2>
         <section className="account">
           <div className="account-content-wrapper">
@@ -40,6 +39,7 @@ function User() {
             <button className="transaction-button">View transactions</button>
           </div>
         </section>
+        
         <section className="account">
           <div className="account-content-wrapper">
             <h3 className="account-title">Argent Bank Savings (x6712)</h3>
@@ -50,6 +50,7 @@ function User() {
             <button className="transaction-button">View transactions</button>
           </div>
         </section>
+        
         <section className="account">
           <div className="account-content-wrapper">
             <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
@@ -61,6 +62,7 @@ function User() {
           </div>
         </section>
       </main>
+      
       <footer className="footer">
         <p className="footer-text">Copyright 2020 Argent Bank</p>
       </footer>

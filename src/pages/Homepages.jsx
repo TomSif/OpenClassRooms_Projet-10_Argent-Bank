@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom'
-import argentBankLogo from '../assets/img/argentBankLogo.png'
+import Header from '../components/Header'
 import iconChat from '../assets/img/icon-chat.png'
 import iconMoney from '../assets/img/icon-money.png'
 import iconSecurity from '../assets/img/icon-security.png'
@@ -8,21 +7,8 @@ import '../css/main.css'
 function HomePage() {
   return (
     <>
-      <nav className="main-nav">
-        <a className="main-nav-logo" href="/">
-          <img
-            className="main-nav-logo-image"
-            src={argentBankLogo}
-            alt="Argent Bank Logo"
-          />
-          <h1 className="sr-only">Argent Bank</h1>
-        </a>
-        <div>
-            <Link className="main-nav-item" to="/sign-in">
-                <i className="fa fa-user-circle"></i>
-                Sign In
-            </Link>        </div>
-      </nav>
+      <Header />
+      
       <main>
         <div className="hero">
           <section className="hero-content">
@@ -33,6 +19,7 @@ function HomePage() {
             <p className="text">Open a savings account with Argent Bank today!</p>
           </section>
         </div>
+        
         <section className="features">
           <h2 className="sr-only">Features</h2>
           <div className="feature-item">
@@ -60,12 +47,12 @@ function HomePage() {
           </div>
         </section>
       </main>
+      
       <footer className="footer">
         <p className="footer-text">Copyright 2020 Argent Bank</p>
       </footer>
     </>
   )
-
 }
 
 export default HomePage
