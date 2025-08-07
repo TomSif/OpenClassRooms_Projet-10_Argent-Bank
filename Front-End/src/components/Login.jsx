@@ -4,7 +4,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { loginUser, clearError } from '../features/auth/authSlice'
 
+/**
+ * Composant de formulaire de connexion
+ * Gère l'authentification utilisateur avec email/password
+ * Redirige automatiquement vers /user après connexion réussie
+ * @returns {JSX.Element} Formulaire de connexion avec gestion d'erreurs
+ */
 const Login = () => {
+  /**
+   * State local du formulaire
+   * @type {Object}
+   * @property {string} email - Email de l'utilisateur
+   * @property {string} password - Mot de passe de l'utilisateur
+   */
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -15,20 +27,31 @@ const Login = () => {
   
   const { isLoading, error, isAuthenticated } = useSelector((state) => state.auth)
 
-  // Redirection après connexion réussie
+  /**
+   * Effect pour la redirection automatique après connexion réussie
+   * Se déclenche quand isAuthenticated passe à true
+   */
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/user')
     }
   }, [isAuthenticated, navigate])
 
-  // Nettoyage des erreurs au démontage
+  /**
+   * Effect de nettoyage des erreurs au démontage du composant
+   * Évite d'afficher des erreurs obsolètes lors du prochain montage
+   */
   useEffect(() => {
     return () => {
       dispatch(clearError())
     }
   }, [dispatch])
 
+  /**
+   * Gestionnaire de changement des inputs du formulaire
+   * Met à jour le state formData de manière immutable
+   * @param {Event} e - Event de changement de l'input
+   */
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({
@@ -37,9 +60,15 @@ const Login = () => {
     }))
   }
 
+  /**
+   * Gestionnaire de soumission du formulaire
+   * Valide que les champs sont remplis avant d'envoyer la requête
+   * @param {Event} e - Event de soumission du formulaire
+   */
   const handleSubmit = (e) => {
     e.preventDefault()
     
+    // Validation simple des champs requis
     if (!formData.email || !formData.password) {
       return
     }

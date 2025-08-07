@@ -4,7 +4,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 // URL de base de l'API
 const API_BASE_URL = 'http://localhost:3001/api/v1'
 
-// Thunk pour le login
+/**
+ * Thunk pour authentifier un utilisateur avec email et mot de passe
+ * @async
+ * @function loginUser
+ * @param {Object} credentials - Les identifiants de connexion
+ * @param {string} credentials.email - L'adresse email de l'utilisateur
+ * @param {string} credentials.password - Le mot de passe de l'utilisateur
+ * @returns {Promise<string>} Le token JWT en cas de succès
+ * @throws {string} Message d'erreur en cas d'échec (login failed, network error)
+ */
 export const loginUser = createAsyncThunk(
   'auth/login',
   async ({ email, password }, { rejectWithValue }) => {
@@ -30,7 +39,18 @@ export const loginUser = createAsyncThunk(
   }
 )
 
-// Thunk pour récupérer le profil
+/**
+ * Thunk pour récupérer le profil de l'utilisateur authentifié
+ * Utilise le token stocké dans le state Redux pour l'authentification
+ * @async
+ * @function fetchUserProfile
+ * @param {void} _ - Paramètre non utilisé (convention Redux Toolkit)
+ * @param {Object} thunkAPI - API Redux Toolkit
+ * @param {Function} thunkAPI.getState - Fonction pour accéder au state global
+ * @param {Function} thunkAPI.rejectWithValue - Fonction pour rejeter avec une valeur custom
+ * @returns {Promise<Object>} Les données du profil utilisateur (firstName, lastName, email, etc.)
+ * @throws {string} Message d'erreur si pas de token ou échec de récupération
+ */
 export const fetchUserProfile = createAsyncThunk(
   'auth/fetchProfile',
   async (_, { getState, rejectWithValue }) => {
@@ -63,7 +83,19 @@ export const fetchUserProfile = createAsyncThunk(
   }
 )
 
-// Thunk pour modifier le userName (stockage côté client uniquement)
+/**
+ * Thunk pour mettre à jour le userName de l'utilisateur
+ * IMPORTANT: Cette fonction ne fait PAS d'appel API car le backend ne supporte pas cette fonctionnalité.
+ * Le userName est stocké uniquement côté client dans localStorage.
+ * @async
+ * @function updateUserName
+ * @param {string} userName - Le nouveau nom d'utilisateur à sauvegarder
+ * @param {Object} thunkAPI - API Redux Toolkit
+ * @param {Function} thunkAPI.getState - Fonction pour accéder au state global
+ * @param {Function} thunkAPI.rejectWithValue - Fonction pour rejeter avec une valeur custom
+ * @returns {Promise<Object>} Objet contenant le nouveau userName
+ * @throws {string} Message d'erreur si pas de données utilisateur disponibles
+ */
 export const updateUserName = createAsyncThunk(
   'auth/updateUserName',
   async (userName, { getState, rejectWithValue }) => {
@@ -86,9 +118,19 @@ export const updateUserName = createAsyncThunk(
   }
 )
 
-// State initial
+/**
+ * State initial de l'authentification
+ * @typedef {Object} AuthState
+ * @property {string|null} token - Token JWT pour l'authentification API
+ * @property {Object|null} user - Données du profil utilisateur (firstName, lastName, email)
+ * @property {string|null} userName - Nom d'utilisateur personnalisé (stocké côté client uniquement)
+ * @property {boolean} isLoading - Indicateur de chargement pour les requêtes async
+ * @property {string|null} error - Message d'erreur de la dernière requête échouée
+ * @property {boolean} isAuthenticated - Statut d'authentification de l'utilisateur
+ */
 const initialState = {
-  token: localStorage.getItem('token') || null,
+  token: localStorage.getItem('token') || null, // ← ICI : lecture au démarrage 
+  // Note: userName est stocké côté client uniquement, pas dans le backend
   user: null,
   userName: localStorage.getItem('userName') || null, // Ajout du userName côté client
   isLoading: false,
@@ -96,11 +138,20 @@ const initialState = {
   isAuthenticated: !!localStorage.getItem('token'),
 }
 
-// Slice
+/**
+ * Slice Redux pour la gestion de l'authentification
+ * Gère le login, logout, profil utilisateur et userName personnalisé
+ */
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    /**
+     * Action pour déconnecter l'utilisateur
+     * Supprime le token de sécurité mais préserve le userName pour la prochaine session
+     * @param {AuthState} state - State actuel (non utilisé car on retourne un nouvel objet)
+     * @returns {AuthState} Nouveau state avec utilisateur déconnecté
+     */
     logout: () => {
       // SÉCURITÉ : Supprimer uniquement les données sensibles
       localStorage.removeItem('token')
@@ -116,9 +167,22 @@ const authSlice = createSlice({
         isAuthenticated: false,
       }
     },
+    
+    /**
+     * Action pour effacer les messages d'erreur
+     * @param {AuthState} state - State actuel (modifié par Immer)
+     */
     clearError: (state) => {
       state.error = null
     },
+    
+    /**
+     * Action pour définir un nouveau userName
+     * Met à jour le state et localStorage simultanément
+     * @param {AuthState} state - State actuel (modifié par Immer)
+     * @param {Object} action - Action Redux
+     * @param {string} action.payload - Le nouveau userName
+     */
     setUserName: (state, action) => {
       state.userName = action.payload
       localStorage.setItem('userName', action.payload)
