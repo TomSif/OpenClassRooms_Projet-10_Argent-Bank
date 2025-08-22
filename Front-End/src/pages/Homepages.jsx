@@ -1,27 +1,29 @@
-import Header from '../components/Header'
-import Footer from '../components/Footer';
-import FeatureItem from '../components/FeatureItem';
-import iconChat from '../assets/img/icon-chat.png'
-import iconMoney from '../assets/img/icon-money.png'
-import iconSecurity from '../assets/img/icon-security.png'
-import '../css/main.css'
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import FeatureItem from "../components/FeatureItem";
+import iconChat from "../assets/img/icon-chat.webp";
+import iconMoney from "../assets/img/icon-money.webp";
+import iconSecurity from "../assets/img/icon-security.webp";
+import "../css/main.css";
 
 function HomePage() {
   return (
     <>
       <Header />
-      
-      <main className='main'>
+
+      <main className="main">
         <div className="hero">
           <section className="hero-content">
             <h2 className="sr-only">Promoted Content</h2>
             <p className="subtitle">No fees.</p>
             <p className="subtitle">No minimum deposit.</p>
             <p className="subtitle">High interest rates.</p>
-            <p className="text">Open a savings account with Argent Bank today!</p>
+            <p className="text">
+              Open a savings account with Argent Bank today!
+            </p>
           </section>
         </div>
-        
+
         <section className="features">
           <h2 className="sr-only">Features</h2>
           <FeatureItem
@@ -41,10 +43,10 @@ function HomePage() {
           />
         </section>
       </main>
-      
+
       <Footer />
     </>
-  )
+  );
 }
 
-export default HomePage
+export default HomePage;

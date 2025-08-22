@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { logout } from '../features/auth/authSlice'
-import argentBankLogo from '../assets/img/argentBankLogo.png'
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../features/auth/authSlice";
+import argentBankLogo from "../assets/img/argentBankLogo.webp";
 
 /**
  * Composant de navigation pour utilisateur authentifié
@@ -17,16 +17,16 @@ const AuthenticatedNav = ({ displayName, onLogout }) => (
       <i className="fa fa-user-circle"></i>
       {displayName}
     </Link>
-    <button 
-      className="main-nav-item" 
+    <button
+      className="main-nav-item"
       onClick={onLogout}
-      style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+      style={{ background: "none", border: "none", cursor: "pointer" }}
     >
       <i className="fa fa-sign-out"></i>
       Sign Out
     </button>
   </>
-)
+);
 
 /**
  * Composant de navigation pour utilisateur non authentifié
@@ -38,7 +38,7 @@ const UnauthenticatedNav = () => (
     <i className="fa fa-user-circle"></i>
     Sign In
   </Link>
-)
+);
 
 /**
  * Composant Header principal de l'application
@@ -47,23 +47,25 @@ const UnauthenticatedNav = () => (
  * @returns {JSX.Element} Header complet avec logo et navigation
  */
 const Header = () => {
-  const dispatch = useDispatch()
-  const { isAuthenticated, user, userName } = useSelector((state) => state.auth)
+  const dispatch = useDispatch();
+  const { isAuthenticated, user, userName } = useSelector(
+    (state) => state.auth
+  );
 
   /**
    * Gestionnaire de déconnexion
    * Dispatch l'action logout qui nettoie le state et localStorage
    */
   const handleLogout = () => {
-    dispatch(logout())
-  }
+    dispatch(logout());
+  };
 
   /**
    * Logique d'affichage du nom utilisateur
    * Priorité: 1) userName personnalisé, 2) firstName du profil, 3) 'User' par défaut
    * @type {string}
    */
-  const displayName = userName || user?.firstName || 'User'
+  const displayName = userName || user?.firstName || "User";
 
   return (
     <nav className="main-nav">
@@ -72,22 +74,22 @@ const Header = () => {
           className="main-nav-logo-image"
           src={argentBankLogo}
           alt="Argent Bank Logo"
+          width="200"
+          height="54"
+          loading="eager"
         />
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
-      
+
       <div>
         {isAuthenticated ? (
-          <AuthenticatedNav 
-            displayName={displayName} 
-            onLogout={handleLogout} 
-          />
+          <AuthenticatedNav displayName={displayName} onLogout={handleLogout} />
         ) : (
           <UnauthenticatedNav />
         )}
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
