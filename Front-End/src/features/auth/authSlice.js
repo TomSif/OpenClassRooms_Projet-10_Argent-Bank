@@ -1,8 +1,8 @@
 // src/features/auth/authSlice.js
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 // URL de base de l'API
-const API_BASE_URL = 'http://localhost:3001/api/v1'
+const API_BASE_URL = "http://localhost:3001/api/v1";
 
 /**
  * Thunk pour authentifier un utilisateur avec email et mot de passe
@@ -15,29 +15,32 @@ const API_BASE_URL = 'http://localhost:3001/api/v1'
  * @throws {string} Message d'erreur en cas d'échec (login failed, network error)
  */
 export const loginUser = createAsyncThunk(
-  'auth/login',
+  "auth/login",
   async ({ email, password }, { rejectWithValue }) => {
     try {
+      // 1. Aller chercher sur internet
       const response = await fetch(`${API_BASE_URL}/user/login`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
-      })
+      });
 
-      const data = await response.json()
+      // 2. Vérifier si ça a marché
+      const data = await response.json();
 
       if (!response.ok) {
-        return rejectWithValue(data.message || 'Login failed')
+        return rejectWithValue(data.message || "Login failed");
       }
 
-      return data.body.token
+      // 3. Retourner le résultat
+      return data.body.token;
     } catch (error) {
-      return rejectWithValue(error.message || 'Network error')
+      return rejectWithValue(error.message || "Network error");
     }
   }
-)
+);
 
 /**
  * Thunk pour récupérer le profil de l'utilisateur authentifié
@@ -52,36 +55,36 @@ export const loginUser = createAsyncThunk(
  * @throws {string} Message d'erreur si pas de token ou échec de récupération
  */
 export const fetchUserProfile = createAsyncThunk(
-  'auth/fetchProfile',
+  "auth/fetchProfile",
   async (_, { getState, rejectWithValue }) => {
     try {
-      const { auth } = getState()
-      const token = auth.token
+      const { auth } = getState();
+      const token = auth.token;
 
       if (!token) {
-        return rejectWithValue('No token available')
+        return rejectWithValue("No token available");
       }
 
       const response = await fetch(`${API_BASE_URL}/user/profile`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (!response.ok) {
-        return rejectWithValue(data.message || 'Failed to fetch profile')
+        return rejectWithValue(data.message || "Failed to fetch profile");
       }
 
-      return data.body
+      return data.body;
     } catch (error) {
-      return rejectWithValue(error.message || 'Network error')
+      return rejectWithValue(error.message || "Network error");
     }
   }
-)
+);
 
 /**
  * Thunk pour mettre à jour le userName de l'utilisateur
@@ -97,26 +100,26 @@ export const fetchUserProfile = createAsyncThunk(
  * @throws {string} Message d'erreur si pas de données utilisateur disponibles
  */
 export const updateUserName = createAsyncThunk(
-  'auth/updateUserName',
+  "auth/updateUserName",
   async (userName, { getState, rejectWithValue }) => {
     try {
       // Pas d'appel API car le backend ne supporte pas userName
       // On stocke juste côté client
-      const { auth } = getState()
-      
+      const { auth } = getState();
+
       if (!auth.user) {
-        return rejectWithValue('No user data available')
+        return rejectWithValue("No user data available");
       }
 
       // Simulation d'un délai réseau pour l'UX
-      await new Promise(resolve => setTimeout(resolve, 500))
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      return { userName }
+      return { userName };
     } catch (error) {
-      return rejectWithValue(error.message || 'Network error')
+      return rejectWithValue(error.message || "Network error");
     }
   }
-)
+);
 
 /**
  * State initial de l'authentification
@@ -129,21 +132,21 @@ export const updateUserName = createAsyncThunk(
  * @property {boolean} isAuthenticated - Statut d'authentification de l'utilisateur
  */
 const initialState = {
-  token: localStorage.getItem('token') || null, // ← ICI : lecture au démarrage 
+  token: localStorage.getItem("token") || null, // ← ICI : lecture au démarrage
   // Note: userName est stocké côté client uniquement, pas dans le backend
   user: null,
-  userName: localStorage.getItem('userName') || null, // Ajout du userName côté client
+  userName: localStorage.getItem("userName") || null, // Ajout du userName côté client
   isLoading: false,
   error: null,
-  isAuthenticated: !!localStorage.getItem('token'),
-}
+  isAuthenticated: !!localStorage.getItem("token"),
+};
 
 /**
  * Slice Redux pour la gestion de l'authentification
  * Gère le login, logout, profil utilisateur et userName personnalisé
  */
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     /**
@@ -154,28 +157,28 @@ const authSlice = createSlice({
      */
     logout: () => {
       // SÉCURITÉ : Supprimer uniquement les données sensibles
-      localStorage.removeItem('token')
+      localStorage.removeItem("token");
       // userName reste dans localStorage pour la prochaine session
-      
+
       // State nettoyé mais userName préservé
       return {
         token: null,
         user: null, // Données sensibles supprimées
-        userName: localStorage.getItem('userName'), // userName préservé
+        userName: localStorage.getItem("userName"), // userName préservé
         isLoading: false,
         error: null,
         isAuthenticated: false,
-      }
+      };
     },
-    
+
     /**
      * Action pour effacer les messages d'erreur
      * @param {AuthState} state - State actuel (modifié par Immer)
      */
     clearError: (state) => {
-      state.error = null
+      state.error = null;
     },
-    
+
     /**
      * Action pour définir un nouveau userName
      * Met à jour le state et localStorage simultanément
@@ -184,63 +187,66 @@ const authSlice = createSlice({
      * @param {string} action.payload - Le nouveau userName
      */
     setUserName: (state, action) => {
-      state.userName = action.payload
-      localStorage.setItem('userName', action.payload)
+      state.userName = action.payload;
+      localStorage.setItem("userName", action.payload);
     },
   },
   extraReducers: (builder) => {
     builder
       // Login cases
+      // 🟡 PENDING
       .addCase(loginUser.pending, (state) => {
-        state.isLoading = true
-        state.error = null
+        state.isLoading = true;
+        state.error = null;
       })
+      // 🟢 FULFILLED
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.token = action.payload
-        state.isAuthenticated = true
-        state.error = null
-        localStorage.setItem('token', action.payload)
+        state.isLoading = false;
+        state.token = action.payload;
+        state.isAuthenticated = true;
+        state.error = null;
+        localStorage.setItem("token", action.payload);
       })
+      // 🔴 REJECTED
       .addCase(loginUser.rejected, (state, action) => {
-        state.isLoading = false
-        state.error = action.payload
-        state.isAuthenticated = false
+        state.isLoading = false;
+        state.error = action.payload;
+        state.isAuthenticated = false;
       })
-      
+
       // Fetch profile cases
       .addCase(fetchUserProfile.pending, (state) => {
-        state.isLoading = true
-        state.error = null
+        state.isLoading = true;
+        state.error = null;
       })
       .addCase(fetchUserProfile.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.user = action.payload
-        state.error = null
+        state.isLoading = false;
+        state.user = action.payload;
+        state.error = null;
       })
       .addCase(fetchUserProfile.rejected, (state, action) => {
-        state.isLoading = false
-        state.error = action.payload
+        state.isLoading = false;
+        state.error = action.payload;
       })
-      
+
       // Update username cases (stockage côté client uniquement)
       .addCase(updateUserName.pending, (state) => {
-        state.isLoading = true
-        state.error = null
+        state.isLoading = true;
+        state.error = null;
       })
       .addCase(updateUserName.fulfilled, (state, action) => {
-        state.isLoading = false
+        state.isLoading = false;
         // Stockage du userName côté client
-        state.userName = action.payload.userName
-        localStorage.setItem('userName', action.payload.userName)
-        state.error = null
+        state.userName = action.payload.userName;
+        localStorage.setItem("userName", action.payload.userName);
+        state.error = null;
       })
       .addCase(updateUserName.rejected, (state, action) => {
-        state.isLoading = false
-        state.error = action.payload
-      })
+        state.isLoading = false;
+        state.error = action.payload;
+      });
   },
-})
+});
 
-export const { logout, clearError, setUserName } = authSlice.actions
-export default authSlice.reducer
+export const { logout, clearError, setUserName } = authSlice.actions;
+export default authSlice.reducer;

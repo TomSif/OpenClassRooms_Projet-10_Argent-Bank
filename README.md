@@ -1,4 +1,4 @@
-![ArgentBank](/Front-End/src/assets/img/argentBankLogo.png)
+![ArgentBank](/Front-End/src/assets/img/argentBankLogo.webp)
 
 # ArgentBank 💰
 
@@ -30,13 +30,15 @@ Ceci est un projet réalisé dans le cadre du programme de formation Développeu
 ### 🎯 Contexte du projet :
 
 **Argent Bank** est une nouvelle banque en ligne qui souhaite développer son application web pour permettre aux clients de :
+
 - Se connecter de manière sécurisée
-- Consulter leurs informations de profil  
+- Consulter leurs informations de profil
 - Gérer leurs comptes bancaires
 
 ### 📱 Fonctionnalités implémentées :
 
 **Phase 1 - Authentification & Profil :**
+
 - ✅ Page d'accueil responsive
 - ✅ Système d'authentification (JWT)
 - ✅ Page de connexion avec gestion d'erreurs
@@ -46,6 +48,7 @@ Ceci est un projet réalisé dans le cadre du programme de formation Développeu
 - ✅ Persistance du userName entre sessions
 
 **Phase 2 - Transactions (Bonus) :**
+
 - ✅ Page de transactions par compte
 - ✅ Affichage détaillé des opérations
 - ✅ Modification des catégories et notes
@@ -54,6 +57,7 @@ Ceci est un projet réalisé dans le cadre du programme de formation Développeu
 ### 🛠️ Stack Technique :
 
 **Frontend :**
+
 - **React 18** avec hooks
 - **Vite** (bundler moderne)
 - **React Router v6** (navigation)
@@ -61,8 +65,9 @@ Ceci est un projet réalisé dans le cadre du programme de formation Développeu
 - **CSS3** responsive
 
 **Backend fourni :**
+
 - **Node.js** / **Express**
-- **MongoDB** 
+- **MongoDB**
 - **JWT** pour l'authentification
 
 ---
@@ -70,33 +75,40 @@ Ceci est un projet réalisé dans le cadre du programme de formation Développeu
 ## 🚀 Installation
 
 ### Prérequis :
+
 - **Node.js** (v14 ou supérieur)
 - **MongoDB** (pour le backend)
 - **Git**
 
 ### 📥 Cloner le projet :
+
 ```bash
 git clone https://github.com/TomSif/OpenClassRooms_Projet-10_Argent-Bank.git
 cd OpenClassRooms_Projet-10_Argent-Bank
 ```
 
 ### 🔧 Installation Backend :
+
 1. Naviguez vers le dossier backend :
+
 ```bash
 cd backend
 ```
 
 2. Installez les dépendances :
+
 ```bash
 npm install
 ```
 
 3. Lancez le serveur de développement :
+
 ```bash
 npm run dev:server
 ```
 
 4. Remplissez la base de données :
+
 ```bash
 npm run populate-db
 ```
@@ -104,17 +116,21 @@ npm run populate-db
 Le backend sera accessible sur `http://localhost:3001`
 
 ### ⚛️ Installation Frontend :
+
 1. Naviguez vers le dossier racine :
+
 ```bash
 cd ../
 ```
 
 2. Installez les dépendances :
+
 ```bash
 npm install
 ```
 
 3. Lancez l'application :
+
 ```bash
 npm run dev
 ```
@@ -127,9 +143,9 @@ L'application sera accessible sur `http://localhost:5173`
 
 Utilisez ces identifiants pour tester l'application :
 
-| Utilisateur | Email | Mot de passe |
-|-------------|-------|--------------|
-| **Tony Stark** | `tony@stark.com` | `password123` |
+| Utilisateur      | Email              | Mot de passe  |
+| ---------------- | ------------------ | ------------- |
+| **Tony Stark**   | `tony@stark.com`   | `password123` |
 | **Steve Rogers** | `steve@rogers.com` | `password456` |
 
 ---
@@ -176,6 +192,7 @@ Une fois le backend lancé, consultez la documentation Swagger :
 `http://localhost:3001/api-docs`
 
 **Endpoints principaux :**
+
 - `POST /api/v1/user/login` - Connexion
 - `POST /api/v1/user/profile` - Récupération profil
 - `PUT /api/v1/user/profile` - Modification profil
@@ -213,13 +230,14 @@ This is a project carried out as part of the Front-End JavaScript React Develope
 > #### Skills evaluated:
 >
 > - ✅ Implement a state manager in a React application (Redux)
-> - 🤝 Interact with a REST API  
+> - 🤝 Interact with a REST API
 > - 📝 Model an API (Phase 2)
 > - 🔑 Authenticate with an API (JWT)
 
 ### 🎯 Project Context:
 
 **Argent Bank** is a new online bank that wants to develop its web application to allow customers to:
+
 - Log in securely
 - View their profile information
 - Manage their bank accounts
@@ -227,6 +245,7 @@ This is a project carried out as part of the Front-End JavaScript React Develope
 ### 📱 Implemented Features:
 
 **Phase 1 - Authentication & Profile:**
+
 - ✅ Responsive homepage
 - ✅ Authentication system (JWT)
 - ✅ Login page with error handling
@@ -236,6 +255,7 @@ This is a project carried out as part of the Front-End JavaScript React Develope
 - ✅ userName persistence between sessions
 
 **Phase 2 - Transactions (Bonus):**
+
 - ✅ Transaction page per account
 - ✅ Detailed display of operations
 - ✅ Category and note modification
@@ -244,6 +264,7 @@ This is a project carried out as part of the Front-End JavaScript React Develope
 ### 🛠️ Tech Stack:
 
 **Frontend:**
+
 - **React 18** with hooks
 - **Vite** (modern bundler)
 - **React Router v6** (navigation)
@@ -251,6 +272,7 @@ This is a project carried out as part of the Front-End JavaScript React Develope
 - **CSS3** responsive
 
 **Backend provided:**
+
 - **Node.js** / **Express**
 - **MongoDB**
 - **JWT** for authentication
@@ -260,33 +282,40 @@ This is a project carried out as part of the Front-End JavaScript React Develope
 ## 🚀 Installation
 
 ### Prerequisites:
+
 - **Node.js** (v14 or higher)
 - **MongoDB** (for backend)
 - **Git**
 
 ### 📥 Clone the project:
+
 ```bash
 git clone https://github.com/TomSif/OpenClassRooms_Projet-10_Argent-Bank.git
 cd OpenClassRooms_Projet-10_Argent-Bank
 ```
 
 ### 🔧 Backend Setup:
+
 1. Navigate to backend folder:
+
 ```bash
 cd backend
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Start development server:
+
 ```bash
 npm run dev:server
 ```
 
 4. Populate database:
+
 ```bash
 npm run populate-db
 ```
@@ -294,17 +323,21 @@ npm run populate-db
 Backend will be accessible at `http://localhost:3001`
 
 ### ⚛️ Frontend Setup:
+
 1. Navigate to root folder:
+
 ```bash
 cd ../
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Start application:
+
 ```bash
 npm run dev
 ```
@@ -317,9 +350,9 @@ Application will be accessible at `http://localhost:5173`
 
 Use these credentials to test the application:
 
-| User | Email | Password |
-|------|-------|----------|
-| **Tony Stark** | `tony@stark.com` | `password123` |
+| User             | Email              | Password      |
+| ---------------- | ------------------ | ------------- |
+| **Tony Stark**   | `tony@stark.com`   | `password123` |
 | **Steve Rogers** | `steve@rogers.com` | `password456` |
 
 ---
