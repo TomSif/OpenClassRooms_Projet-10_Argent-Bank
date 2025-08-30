@@ -23,6 +23,20 @@ const Login = () => {
     password: "",
   });
 
+  /**
+   * État de la checkbox "Remember me"
+   * @type {boolean}
+   */
+  const [rememberMe, setRememberMe] = useState(false);
+
+  // Initialise rememberMe depuis localStorage au montage
+  useEffect(() => {
+    const savedRememberMe = localStorage.getItem("rememberMe");
+    if (savedRememberMe !== null) {
+      setRememberMe(savedRememberMe === "true");
+    }
+  }, []);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -64,19 +78,21 @@ const Login = () => {
   };
 
   /**
+   * Gestionnaire de changement de la checkbox "Remember me"
+   * @param {React.ChangeEvent<HTMLInputElement>} e - Événement de changement
+   */
+  const handleRememberMeChange = (e) => {
+    setRememberMe(e.target.checked);
+  };
+
+  /**
    * Gestionnaire de soumission du formulaire
-   * Valide que les champs sont remplis avant d'envoyer la requête
-   * @param {Event} e - Event de soumission du formulaire
+   * @param {React.FormEvent} e - Événement de soumission
    */
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Validation simple des champs requis
-    if (!formData.email || !formData.password) {
-      return;
-    }
-
-    dispatch(loginUser(formData));
+    if (!formData.email || !formData.password) return;
+    dispatch(loginUser({ ...formData, rememberMe }));
   };
 
   return (
@@ -110,7 +126,12 @@ const Login = () => {
         </div>
 
         <div className="input-remember">
-          <input type="checkbox" id="remember-me" />
+          <input
+            type="checkbox"
+            id="remember-me"
+            checked={rememberMe}
+            onChange={handleRememberMeChange}
+          />
           <label htmlFor="remember-me">Remember me</label>
         </div>
 
