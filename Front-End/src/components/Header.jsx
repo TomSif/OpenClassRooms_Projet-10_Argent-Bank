@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice";
-import argentBankLogo from "../assets/img/argentBankLogo.webp";
+import argentBankLogo from "/assets/img/argentBankLogo.webp";
 
 /**
  * Composant de navigation pour utilisateur authentifié
@@ -13,17 +13,20 @@ import argentBankLogo from "../assets/img/argentBankLogo.webp";
  */
 const AuthenticatedNav = ({ displayName, onLogout }) => (
   <>
-    <Link className="main-nav-item" to="/user">
-      <i className="fa fa-user-circle"></i>
+    <Link className="main-nav-container" to="/user">
       {displayName}
+      <i className="fa fa-user-circle main-nav-icon"></i>
     </Link>
     <button
-      className="main-nav-item"
+      className="main-nav-item-button"
       onClick={onLogout}
-      style={{ background: "none", border: "none", cursor: "pointer" }}
+      style={{
+        background: "none",
+        border: "none",
+        cursor: "pointer",
+      }}
     >
-      <i className="fa fa-sign-out"></i>
-      Sign Out
+      <i className="fa fa-power-off main-nav-icon"></i>
     </button>
   </>
 );
@@ -72,7 +75,7 @@ const Header = () => {
       <Link className="main-nav-logo" to="/">
         <img
           className="main-nav-logo-image"
-          src={argentBankLogo}
+          src={`${argentBankLogo}?t=${Date.now()}`}
           alt="Argent Bank Logo"
           width="200"
           height="54"
@@ -81,7 +84,7 @@ const Header = () => {
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
 
-      <div>
+      <div className="main-nav-item">
         {isAuthenticated ? (
           <AuthenticatedNav displayName={displayName} onLogout={handleLogout} />
         ) : (

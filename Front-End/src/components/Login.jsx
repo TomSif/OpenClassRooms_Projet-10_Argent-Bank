@@ -1,8 +1,9 @@
 // src/components/Login.jsx
-import { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { loginUser, clearError } from '../features/auth/authSlice'
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { loginUser, clearError } from "../features/auth/authSlice";
+import "../css/main.css";
 
 /**
  * Composant de formulaire de connexion
@@ -18,14 +19,16 @@ const Login = () => {
    * @property {string} password - Mot de passe de l'utilisateur
    */
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  })
-  
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  
-  const { isLoading, error, isAuthenticated } = useSelector((state) => state.auth)
+    email: "",
+    password: "",
+  });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { isLoading, error, isAuthenticated } = useSelector(
+    (state) => state.auth
+  );
 
   /**
    * Effect pour la redirection automatique après connexion réussie
@@ -33,9 +36,9 @@ const Login = () => {
    */
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/user')
+      navigate("/user");
     }
-  }, [isAuthenticated, navigate])
+  }, [isAuthenticated, navigate]);
 
   /**
    * Effect de nettoyage des erreurs au démontage du composant
@@ -43,9 +46,9 @@ const Login = () => {
    */
   useEffect(() => {
     return () => {
-      dispatch(clearError())
-    }
-  }, [dispatch])
+      dispatch(clearError());
+    };
+  }, [dispatch]);
 
   /**
    * Gestionnaire de changement des inputs du formulaire
@@ -53,12 +56,12 @@ const Login = () => {
    * @param {Event} e - Event de changement de l'input
    */
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
+    const { name, value } = e.target;
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
-    }))
-  }
+      [name]: value,
+    }));
+  };
 
   /**
    * Gestionnaire de soumission du formulaire
@@ -66,21 +69,21 @@ const Login = () => {
    * @param {Event} e - Event de soumission du formulaire
    */
   const handleSubmit = (e) => {
-    e.preventDefault()
-    
+    e.preventDefault();
+
     // Validation simple des champs requis
     if (!formData.email || !formData.password) {
-      return
+      return;
     }
-    
-    dispatch(loginUser(formData))
-  }
+
+    dispatch(loginUser(formData));
+  };
 
   return (
     <section className="sign-in-content">
       <i className="fa fa-user-circle sign-in-icon"></i>
       <h1>Sign In</h1>
-      
+
       <form onSubmit={handleSubmit}>
         <div className="input-wrapper">
           <label htmlFor="email">Email</label>
@@ -93,7 +96,7 @@ const Login = () => {
             required
           />
         </div>
-        
+
         <div className="input-wrapper">
           <label htmlFor="password">Password</label>
           <input
@@ -105,28 +108,27 @@ const Login = () => {
             required
           />
         </div>
-        
+
         <div className="input-remember">
           <input type="checkbox" id="remember-me" />
           <label htmlFor="remember-me">Remember me</label>
         </div>
-        
+
         {error && (
-          <div className="error-message" style={{ color: 'red', margin: '10px 0' }}>
+          <div
+            className="error-message"
+            style={{ color: "red", margin: "10px 0" }}
+          >
             {error}
           </div>
         )}
-        
-        <button 
-          type="submit" 
-          className="sign-in-button"
-          disabled={isLoading}
-        >
-          {isLoading ? 'Signing In...' : 'Sign In'}
+
+        <button type="submit" className="sign-in-button" disabled={isLoading}>
+          {isLoading ? "Signing In..." : "Sign In"}
         </button>
       </form>
     </section>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

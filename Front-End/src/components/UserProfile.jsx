@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { fetchUserProfile, updateUserName } from '../features/auth/authSlice'
-
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUserProfile, updateUserName } from "../features/auth/authSlice";
 
 /**
  * Composant de formulaire d'édition du profil utilisateur
@@ -16,10 +15,17 @@ import { fetchUserProfile, updateUserName } from '../features/auth/authSlice'
  * @returns {JSX.Element} Formulaire d'édition avec champs éditable et lecture seule
  */
 
-const EditForm = ({ user, newUserName, setNewUserName, onSave, onCancel, isLoading }) => (
+const EditForm = ({
+  user,
+  newUserName,
+  setNewUserName,
+  onSave,
+  onCancel,
+  isLoading,
+}) => (
   <div>
     <h1>Edit user info</h1>
-    <form onSubmit={onSave}>
+    <form onSubmit={onSave} className="userName-form">
       <div className="input-wrapper">
         <label htmlFor="userName">User name:</label>
         <input
@@ -30,52 +36,46 @@ const EditForm = ({ user, newUserName, setNewUserName, onSave, onCancel, isLoadi
           required
         />
       </div>
-      
+
       {/* Champs en lecture seule - données venant de l'API */}
       <div className="input-wrapper">
         <label htmlFor="firstName">First name:</label>
         <input
           type="text"
           id="firstName"
-          value={user?.firstName || ''}
+          value={user?.firstName || ""}
           disabled
-          style={{ backgroundColor: '#f0f0f0' }}
+          style={{ backgroundColor: "#f0f0f0" }}
         />
       </div>
-      
+
       <div className="input-wrapper">
         <label htmlFor="lastName">Last name:</label>
         <input
           type="text"
           id="lastName"
-          value={user?.lastName || ''}
+          value={user?.lastName || ""}
           disabled
-          style={{ backgroundColor: '#f0f0f0' }}
+          style={{ backgroundColor: "#f0f0f0" }}
         />
       </div>
-      
-      <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-        <button 
-          type="submit" 
-          className="edit-button"
-          disabled={isLoading}
-        >
-          {isLoading ? 'Saving...' : 'Save'}
+
+      <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
+        <button type="submit" className="edit-button" disabled={isLoading}>
+          {isLoading ? "Saving..." : "Save"}
         </button>
-        <button 
-          type="button" 
+        <button
+          type="button"
           className="edit-button"
           onClick={onCancel}
-          style={{ backgroundColor: '#6c757d' }}
+          style={{ backgroundColor: "#6c757d" }}
         >
           Cancel
         </button>
       </div>
     </form>
   </div>
-)
-
-
+);
 
 /**
  * Composant d'affichage du profil utilisateur
@@ -88,16 +88,15 @@ const EditForm = ({ user, newUserName, setNewUserName, onSave, onCancel, isLoadi
 const ProfileDisplay = ({ user, onEditClick }) => (
   <div>
     <h1>
-      Welcome back<br />
+      Welcome back
+      <br />
       {user?.firstName} {user?.lastName || user?.userName}!
     </h1>
     <button className="edit-button" onClick={onEditClick}>
       Edit Name
     </button>
   </div>
-)
-
-
+);
 
 /**
  * Composant principal de gestion du profil utilisateur
@@ -106,14 +105,14 @@ const ProfileDisplay = ({ user, onEditClick }) => (
  * @returns {JSX.Element} Interface complète de gestion du profil
  */
 const UserProfile = () => {
-  const dispatch = useDispatch()
-  const { user, isLoading, error } = useSelector((state) => state.auth)
-  
+  const dispatch = useDispatch();
+  const { user, isLoading, error } = useSelector((state) => state.auth);
+
   /** @type {boolean} État pour basculer entre mode affichage/édition */
-  const [isEditing, setIsEditing] = useState(false)
-  
+  const [isEditing, setIsEditing] = useState(false);
+
   /** @type {string} Valeur temporaire du userName pendant l'édition */
-  const [newUserName, setNewUserName] = useState('')
+  const [newUserName, setNewUserName] = useState("");
 
   /**
    * Effect pour charger le profil utilisateur au montage
@@ -121,9 +120,9 @@ const UserProfile = () => {
    */
   useEffect(() => {
     if (!user) {
-      dispatch(fetchUserProfile())
+      dispatch(fetchUserProfile());
     }
-  }, [dispatch, user])
+  }, [dispatch, user]);
 
   /**
    * Effect pour initialiser newUserName avec la valeur actuelle
@@ -131,18 +130,18 @@ const UserProfile = () => {
    */
   useEffect(() => {
     if (user?.userName) {
-      setNewUserName(user.userName)
+      setNewUserName(user.userName);
     }
-  }, [user])
+  }, [user]);
 
   /**
    * Gestionnaire pour passer en mode édition
    * Initialise newUserName avec la valeur actuelle du user
    */
   const handleEditClick = () => {
-    setIsEditing(true)
-    setNewUserName(user?.userName || '')
-  }
+    setIsEditing(true);
+    setNewUserName(user?.userName || "");
+  };
 
   /**
    * Gestionnaire de sauvegarde des modifications
@@ -151,22 +150,22 @@ const UserProfile = () => {
    * @param {Event} e - Event de soumission du formulaire
    */
   const handleSave = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     // Ne sauvegarder que si la valeur a changé et n'est pas vide
     if (newUserName.trim() && newUserName !== user?.userName) {
-      dispatch(updateUserName(newUserName.trim()))
+      dispatch(updateUserName(newUserName.trim()));
     }
-    setIsEditing(false)
-  }
+    setIsEditing(false);
+  };
 
   /**
    * Gestionnaire d'annulation de l'édition
    * Restore la valeur originale et ferme le mode édition
    */
   const handleCancel = () => {
-    setNewUserName(user?.userName || '')
-    setIsEditing(false)
-  }
+    setNewUserName(user?.userName || "");
+    setIsEditing(false);
+  };
 
   // États de chargement et d'erreur
   if (isLoading && !user) {
@@ -174,7 +173,7 @@ const UserProfile = () => {
       <div className="header">
         <h1>Loading...</h1>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -182,13 +181,13 @@ const UserProfile = () => {
       <div className="header">
         <h1>Error loading profile: {error}</h1>
       </div>
-    )
+    );
   }
 
   return (
     <div className="header">
       {isEditing ? (
-        <EditForm 
+        <EditForm
           user={user}
           newUserName={newUserName}
           setNewUserName={setNewUserName}
@@ -197,13 +196,10 @@ const UserProfile = () => {
           isLoading={isLoading}
         />
       ) : (
-        <ProfileDisplay 
-          user={user}
-          onEditClick={handleEditClick}
-        />
+        <ProfileDisplay user={user} onEditClick={handleEditClick} />
       )}
     </div>
-  )
-}
+  );
+};
 
-export default UserProfile
+export default UserProfile;

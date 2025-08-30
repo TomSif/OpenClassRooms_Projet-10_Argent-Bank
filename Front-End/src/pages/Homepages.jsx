@@ -1,9 +1,9 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FeatureItem from "../components/FeatureItem";
-import iconChat from "../assets/img/icon-chat.webp";
-import iconMoney from "../assets/img/icon-money.webp";
-import iconSecurity from "../assets/img/icon-security.webp";
+import iconChat from "../../public/assets/img/icon-chat.webp";
+import iconMoney from "../../public/assets/img/icon-money.webp";
+import iconSecurity from "../../public/assets/img/icon-security.webp";
 import "../css/main.css";
 
 function HomePage() {
