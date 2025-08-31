@@ -1,0 +1,658 @@
+swagger: '2.0'
+info:
+  title: Bank Argent API
+  description: RESTful API for user management, bank accounts, and transactions
+  version: '1.1.0'
+host: localhost:3001
+basePath: /api/v1
+schemes: [http]
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: JWT token for authenticated requests.
+
+paths:
+  /user/login:
+    post:
+      tags: [User Module]
+      summary: Login
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/Login'
+      responses:
+        '200':
+          description: Login Successfully
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: Login successful
+              body:
+                $ref: '#/definitions/LoginResponse'
+        '400':
+          description: Invalid Fields
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: Invalid email or password format
+        '401':
+          description: Invalid Credentials
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 401
+              message:
+                type: string
+                example: Invalid credentials
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 500
+              message:
+                type: string
+                example: Internal server error
+
+  /user/signup:
+    post:
+      tags: [User Module]
+      summary: Signup
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: User Created Successfully
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 201
+              message:
+                type: string
+                example: User created successfully
+              body:
+                $ref: '#/definitions/User'
+        '400':
+          description: Invalid Fields
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: Missing required fields
+        '409':
+          description: Email or username already exists
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 409
+              message:
+                type: string
+                example: Email or username already exists
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 500
+              message:
+                type: string
+                example: Internal server error
+
+  /user/profile:
+    post:
+      security:
+        - Bearer: []
+      tags: [User Module]
+      summary: Get User Profile
+      responses:
+        '200':
+          description: User profile retrieved successfully
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: Successfully got user profile data
+              body:
+                $ref: '#/definitions/UserProfile'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 401
+              message:
+                type: string
+                example: Unauthorized - invalid token
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 500
+              message:
+                type: string
+                example: Internal server error
+
+    put:
+      security:
+        - Bearer: []
+      tags: [User Module]
+      summary: Update User Profile
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserProfile'
+      responses:
+        '200':
+          description: User profile updated successfully
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: Successfully updated user profile data
+              body:
+                $ref: '#/definitions/UserProfile'
+        '400':
+          description: Invalid Fields
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: Invalid firstName or lastName format
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 401
+              message:
+                type: string
+                example: Unauthorized - invalid token
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 500
+              message:
+                type: string
+                example: Internal server error
+
+  /accounts:
+    get:
+      security:
+        - Bearer: []
+      tags: [Account Module]
+      summary: Get User Accounts
+      responses:
+        '200':
+          description: User accounts retrieved successfully
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: User accounts retrieved successfully
+              body:
+                type: array
+                items:
+                  $ref: '#/definitions/Account'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 401
+              message:
+                type: string
+                example: Unauthorized - invalid token
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 500
+              message:
+                type: string
+                example: Internal server error
+
+  /accounts/{accountId}/transactions:
+    get:
+      security:
+        - Bearer: []
+      tags: [Transactions Module]
+      summary: Get Account Transactions
+      parameters:
+        - in: path
+          name: accountId
+          required: true
+          type: string
+        - in: query
+          name: month
+          type: string
+          description: "Filter by month (YYYY-MM). Default: current month."
+        - in: query
+          name: year
+          type: string
+          description: "Filter by year (YYYY)."
+        - in: query
+          name: page
+          type: integer
+          default: 1
+        - in: query
+          name: limit
+          type: integer
+          default: 20
+      responses:
+        '200':
+          description: Transactions retrieved successfully
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: Transactions retrieved successfully
+              body:
+                $ref: '#/definitions/PaginatedTransactionsResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 401
+              message:
+                type: string
+                example: Unauthorized - invalid token
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 403
+              message:
+                type: string
+                example: Forbidden - account does not belong to user
+        '404':
+          description: Account not found
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 404
+              message:
+                type: string
+                example: Account not found
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 500
+              message:
+                type: string
+                example: Internal server error
+
+  /transactions/{transactionId}:
+    get:
+      security:
+        - Bearer: []
+      tags: [Transactions Module]
+      summary: Get Transaction Details
+      parameters:
+        - in: path
+          name: transactionId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Transaction details retrieved successfully
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: Transaction details retrieved successfully
+              body:
+                $ref: '#/definitions/Transaction'
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 401
+              message:
+                type: string
+                example: Unauthorized - invalid token
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 403
+              message:
+                type: string
+                example: Forbidden - transaction does not belong to user
+        '404':
+          description: Transaction not found
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 404
+              message:
+                type: string
+                example: Transaction not found
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 500
+              message:
+                type: string
+                example: Internal server error
+
+    patch:
+      security:
+        - Bearer: []
+      tags: [Transactions Module]
+      summary: Update Transaction Metadata
+      description: Update category and/or note. To clear the note, send an empty string.
+      parameters:
+        - in: path
+          name: transactionId
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionUpdate'
+      responses:
+        '200':
+          description: Transaction updated successfully
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: Transaction updated successfully
+              body:
+                $ref: '#/definitions/Transaction'
+        '400':
+          description: Invalid Fields
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 400
+              message:
+                type: string
+                example: Invalid category or note format
+        '401':
+          description: Unauthorized
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 401
+              message:
+                type: string
+                example: Unauthorized - invalid token
+        '403':
+          description: Forbidden
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 403
+              message:
+                type: string
+                example: Forbidden - transaction does not belong to user
+        '404':
+          description: Transaction not found
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 404
+              message:
+                type: string
+                example: Transaction not found
+        '500':
+          description: Internal Server Error
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 500
+              message:
+                type: string
+                example: Internal server error
+
+definitions:
+  Login:
+    type: object
+    required: [email, password]
+    properties:
+      email:
+        type: string
+        format: email
+        example: user@example.com
+      password:
+        type: string
+        format: password
+        example: securePassword123
+      rememberMe:
+        type: boolean
+        default: false
+
+  LoginResponse:
+    type: object
+    properties:
+      token:
+        type: string
+        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+  User:
+    type: object
+    required: [email, password, firstName, lastName]
+    properties:
+      email:
+        type: string
+        format: email
+        example: user@example.com
+      password:
+        type: string
+        format: password
+        example: securePassword123
+      firstName:
+        type: string
+        example: John
+      lastName:
+        type: string
+        example: Doe
+
+  UserProfile:
+    type: object
+    properties:
+      firstName:
+        type: string
+        example: John
+      lastName:
+        type: string
+        example: Doe
+      userName:
+        type: string
+        example: john_doe
+
+  Account:
+    type: object
+    properties:
+      id:
+        type: string
+        example: x3448
+      type:
+        type: string
+        example: Checking
+      balance:
+        type: number
+        format: double
+        example: 48098.43
+
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: string
+        example: tx_123456
+      accountId:
+        type: string
+        example: acc_789
+      date:
+        type: string
+        format: date
+        example: 2024-02-27
+      description:
+        type: string
+        example: Golden Sun Bakery
+      amount:
+        type: number
+        format: double
+        example: 8.00
+      balance:
+        type: number
+        format: double
+        example: 298.00
+      transactionType:
+        type: string
+        example: Electronic
+      category:
+        type: string
+        example: Food
+      note:
+        type: string
+        example: Business lunch
+
+  TransactionUpdate:
+    type: object
+    properties:
+      category:
+        type: string
+        example: Food
+      note:
+        type: string
+        example: Business lunch
+        description: Send empty string to clear the note.
+
+  PaginatedTransactionsResponse:
+    type: object
+    properties:
+      transactions:
+        type: array
+        items:
+          $ref: '#/definitions/Transaction'
+      pagination:
+        type: object
+        properties:
+          currentPage:
+            type: integer
+            example: 1
+          totalPages:
+            type: integer
+            example: 5
+          totalTransactions:
+            type: integer
+            example: 87
+          hasNextPage:
+            type: boolean
+            example: true

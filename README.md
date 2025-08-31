@@ -163,25 +163,36 @@ Utilisez ces identifiants pour tester l'application :
 
 ## 🏗️ Architecture
 
-```
-src/
-├── app/                    # Configuration Redux
-│   └── store.js
-├── features/               # Slices Redux
-│   └── auth/
-│       └── authSlice.js
-├── components/             # Composants réutilisables
-│   ├── Header.jsx
-│   ├── Login.jsx
-│   └── UserProfile.jsx
-├── pages/                  # Pages principales
-│   ├── HomePage.jsx
-│   ├── SignInPage.jsx
-│   ├── User.jsx
-│   └── Transactions.jsx
-└── assets/                 # Images et styles
-    ├── img/
-    └── css/
+```markdown
+Front-End/
+├── docs/ # 📚 Documentation
+│ └── swagger_phase_2.yaml # API Swagger/OpenAPI Phase 2
+├── public/ # Assets statiques
+│ └── assets/
+│ └── img/ # 🖼️ Images et icônes
+│ ├── argentBankLogo.webp
+│ ├── icon-chat.webp
+│ ├── icon-money.webp
+│ ├── icon-security.webp
+│ ├── bank-tree.webp
+│ └── bank-tree-max920.webp
+└── src/
+├── app/ # Configuration Redux
+│ └── store.js
+├── features/ # Slices Redux
+│ └── auth/
+│ └── authSlice.js
+├── components/ # Composants réutilisables
+│ ├── Header.jsx
+│ ├── Login.jsx
+│ └── UserProfile.jsx
+├── pages/ # Pages principales
+│ ├── HomePage.jsx
+│ ├── SignInPage.jsx
+│ ├── User.jsx
+│ └── Transactions.jsx
+└── css/
+└── main.css # Fichier CSS principal
 ```
 
 ---
@@ -201,7 +212,7 @@ Une fois le backend lancé, consultez la documentation Swagger :
 
 ## 📋 Spécifications Phase 2
 
-J'ai également conçu une spécification d'API pour la gestion des transactions (Phase 2 du projet). Consultez le fichier `swagger_phase_2.yaml` pour les détails techniques.
+J'ai également conçu une spécification d'API pour la gestion des transactions (Phase 2 du projet). Consultez le fichier `swagger_phase_2.yaml` dans /docs pour les détails techniques.
 
 ---
 
