@@ -120,40 +120,12 @@ export const updateUserName = createAsyncThunk(
  * @property {boolean} rememberMe - État de la persistance de session.
  */
 const initialState = {
-  /**
-   * Token JWT pour l'authentification.
-   * @type {string|null}
-   */
   token: localStorage.getItem("token") || null,
-  /**
-   * Données du profil utilisateur.
-   * @type {Object|null}
-   */
   user: null,
-  /**
-   * Nom d'utilisateur personnalisé.
-   * @type {string|null}
-   */
   userName: localStorage.getItem("userName") || null,
-  /**
-   * Indicateur de chargement pour les requêtes asynchrones.
-   * @type {boolean}
-   */
   isLoading: false,
-  /**
-   * Message d'erreur de la dernière requête échouée.
-   * @type {string|null}
-   */
   error: null,
-  /**
-   * État d'authentification de l'utilisateur.
-   * @type {boolean}
-   */
   isAuthenticated: !!localStorage.getItem("token"),
-  /**
-   * État de la checkbox "Remember me".
-   * @type {boolean}
-   */
   rememberMe: localStorage.getItem("rememberMe") === "true" || false,
 };
 

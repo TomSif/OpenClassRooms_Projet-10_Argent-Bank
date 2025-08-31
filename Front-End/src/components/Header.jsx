@@ -75,7 +75,7 @@ const Header = () => {
       <Link className="main-nav-logo" to="/">
         <img
           className="main-nav-logo-image"
-          src={`${argentBankLogo}?t=${Date.now()}`}
+          src={argentBankLogo}
           alt="Argent Bank Logo"
           width="200"
           height="54"
