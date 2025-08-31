@@ -183,6 +183,9 @@ Front-End/
 │ └── auth/
 │ └── authSlice.js
 ├── components/ # Composants réutilisables
+│ ├── AccountCard.jsx
+│ ├── FeatureItem.jsx
+│ ├── Footer.jsx
 │ ├── Header.jsx
 │ ├── Login.jsx
 │ └── UserProfile.jsx
