@@ -91,21 +91,43 @@ export const fetchUserProfile = createAsyncThunk(
 );
 
 /**
- * Thunk asynchrone pour mettre à jour le userName de l'utilisateur.
- * NOTE: Cette fonction simule un appel API car le backend n'est pas implémenté.
- * Le userName est stocké côté client dans localStorage.
+ * Thunk asynchrone pour mettre à jour le userName de l'utilisateur via l'API.
+ * C'est ici que la nouvelle route API (PUT /user/profile) est utilisée pour rendre la modification persistante en base de données.
  * @async
  * @function updateUserName
- * @memberof module:features/auth/authSlice
- * @param {string} userName - Le nouveau nom d'utilisateur.
- * @returns {Promise<Object>} Objet contenant le nouveau userName.
+ * @param {string} userName - Le nouveau nom d'utilisateur à sauvegarder.
+ * @param {Object} thunkAPI - L'objet ThunkAPI fourni par Redux Toolkit, contenant getState et rejectWithValue.
+ * @returns {Promise<Object>} Une promesse qui résout avec le profil utilisateur complet et mis à jour, retourné par l'API.
+ * @throws {string} Un message d'erreur si la mise à jour échoue (token manquant, erreur réseau, etc.).
  */
 export const updateUserName = createAsyncThunk(
   "auth/updateUserName",
-  async (userName) => {
-    // Simulation d'un délai réseau pour une meilleure UX
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return { userName };
+  async (userName, { getState, rejectWithValue }) => {
+    try {
+      const { auth } = getState();
+      const token = auth.token;
+      if (!token) {
+        return rejectWithValue("Authentication token not found.");
+      }
+
+      const response = await fetch(`${API_BASE_URL}/user/profile`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ userName }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        return rejectWithValue(data.message || "Failed to update user name");
+      }
+      return data.body;
+    } catch (error) {
+      return rejectWithValue(error.message || "Network error");
+    }
   }
 );
 
@@ -121,8 +143,7 @@ export const updateUserName = createAsyncThunk(
  */
 const initialState = {
   token: localStorage.getItem("token") || null,
-  user: null,
-  userName: localStorage.getItem("userName") || null,
+  user: null, // Le userName est maintenant une propriété de cet objet 'user'
   isLoading: false,
   error: null,
   isAuthenticated: !!localStorage.getItem("token"),
@@ -231,7 +252,6 @@ const authSlice = createSlice({
         // Si le token est expiré ou invalide (401), déconnecter l'utilisateur
         if (action.payload?.status === 401) {
           localStorage.removeItem("token");
-          localStorage.removeItem("userName");
           localStorage.removeItem("rememberMe");
           state.isAuthenticated = false;
           state.user = null;
@@ -242,10 +262,17 @@ const authSlice = createSlice({
           state.error = action.payload;
         }
       })
-      // Cas pour updateUserName.fulfilled
+      .addCase(updateUserName.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(updateUserName.fulfilled, (state, action) => {
-        state.userName = action.payload.userName;
-        localStorage.setItem("userName", action.payload.userName);
+        state.isLoading = false;
+        state.user = action.payload;
+      })
+      .addCase(updateUserName.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });

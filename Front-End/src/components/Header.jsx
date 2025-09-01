@@ -51,9 +51,7 @@ const UnauthenticatedNav = () => (
  */
 const Header = () => {
   const dispatch = useDispatch();
-  const { isAuthenticated, user, userName } = useSelector(
-    (state) => state.auth
-  );
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   /**
    * Gestionnaire de déconnexion
@@ -68,7 +66,7 @@ const Header = () => {
    * Priorité: 1) userName personnalisé, 2) firstName du profil, 3) 'User' par défaut
    * @type {string}
    */
-  const displayName = userName || user?.firstName || "User";
+  const displayName = user?.userName || user?.firstName || "User";
 
   return (
     <nav className="main-nav">
